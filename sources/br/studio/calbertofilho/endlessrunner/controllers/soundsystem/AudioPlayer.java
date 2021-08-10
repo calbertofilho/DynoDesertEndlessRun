@@ -50,6 +50,7 @@ public class AudioPlayer implements LineListener {
 	private void createPlayer() throws LineUnavailableException, IOException {
 		player = (Clip) AudioSystem.getLine(info);
 		player.open(decodedSound);
+		player.addLineListener(this);
 	}
 
 	private void reloadPlayer() throws LineUnavailableException, IOException {
@@ -71,6 +72,7 @@ public class AudioPlayer implements LineListener {
 	private void playSound(int loops) {
 		try {
 			this.loops = loops;
+			player.loop(loops);
 			if (isReady() && !isPlaying())
 				player.start();
 			else {
@@ -152,7 +154,8 @@ public class AudioPlayer implements LineListener {
 	@Override
 	public void update(LineEvent event) {
 		if (event.getType() == LineEvent.Type.STOP)
-			stopSound();
+			if (loops == 0)
+				stopSound();
 	}
 
 }

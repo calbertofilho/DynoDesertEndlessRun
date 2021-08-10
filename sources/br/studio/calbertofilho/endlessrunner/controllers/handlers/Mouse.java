@@ -32,6 +32,7 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 
 	public synchronized void update() {
 		pos.setLocation(curPos);
+		scroll = 0;
 		for (int i = 0; i < buttons.length; i++) {
 			if (buttons[i]) {
 				if (buttonsState[i] == InputID.RELEASED) {

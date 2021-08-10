@@ -58,17 +58,15 @@ public class MenuScreen extends CommonScreen {
 		if (selection_fx.isPlaying())
 			selection_fx.stopSound();
 		if (keyboard.wasTyped(KeyEvent.VK_ESCAPE)) {
-			menu_bgm.stopSound();
-			close_fx.playSoundOnce();
-			System.exit(0);
+			closeGame();
 		}
-		if ((keyboard.wasTyped(KeyEvent.VK_UP)) || (keyboard.wasTyped(KeyEvent.VK_W))) {
+		if ((keyboard.wasTyped(KeyEvent.VK_UP)) || (keyboard.wasTyped(KeyEvent.VK_W)) || (mouse.getScroll() == -1)) {
 			selection_fx.playSoundOnce();
 			currentSelection--;
 			if (currentSelection < 0)
 				currentSelection = options.length - 1;
 		}
-		if ((keyboard.wasTyped(KeyEvent.VK_DOWN)) || (keyboard.wasTyped(KeyEvent.VK_S))) {
+		if ((keyboard.wasTyped(KeyEvent.VK_DOWN)) || (keyboard.wasTyped(KeyEvent.VK_S)) || (mouse.getScroll() == 1)) {
 			selection_fx.playSoundOnce();
 			currentSelection++;
 			if (currentSelection >= options.length)
@@ -79,9 +77,14 @@ public class MenuScreen extends CommonScreen {
 		}
 		for (Rectangle item : items) {
 			if (item.contains(mouse.getPosition())) {
-				currentSelection = items.indexOf(item);
-				if (mouse.wasClicked(MouseEvent.BUTTON1))
+				if (currentSelection != items.indexOf(item)) {
+					selection_fx.playSoundOnce();
+					currentSelection = items.indexOf(item);
+				}
+				if ((mouse.wasClicked(MouseEvent.BUTTON1)) && (currentSelection == items.indexOf(item))) {
 					menuAction();
+					return;
+				}
 			}
 		}
 	}
@@ -98,9 +101,14 @@ public class MenuScreen extends CommonScreen {
 			confirmation_fx.playSoundOnce();
 			manager.changeState(new TutorialScreen(manager));
 		} else if (currentSelection == 3) {	// Quit game
-			close_fx.playSoundOnce();
-			System.exit(0);
+			closeGame();
 		}
+	}
+
+	private void closeGame() {
+		close_fx.playSoundOnce();
+		menu_bgm.stopSound();
+		System.exit(0);
 	}
 
 	@Override
