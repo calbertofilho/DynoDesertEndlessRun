@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -11,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import br.studio.calbertofilho.endlessrunner.controllers.containers.DisplayPanel;
 import br.studio.calbertofilho.endlessrunner.controllers.containers.Window;
@@ -25,9 +28,11 @@ public class MenuScreen extends CommonScreen {
 	private ArrayList<Rectangle> items;
 	private String[] options = { "Iniciar", "Opcoes", "Ajuda", "Sair" };
 	private int currentSelection = 0;
-	private int titlePadding = 150;
-	private Point menuPosition = new Point(1100, 450);
+	private int titlePadding = 100;
+	private Point menuPosition = new Point(1100, 400);
 	private AudioPlayer menu_bgm, selection_fx, confirmation_fx, close_fx;
+//	private Image[] layers;
+	private Image background;
 
 	public MenuScreen(GameStates manager) {
 		super(manager);
@@ -36,6 +41,14 @@ public class MenuScreen extends CommonScreen {
 	@Override
 	protected void init() {
 		try {
+//			layers = new Image[] {
+//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax1.png"))),
+//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax2.png"))),
+//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax3.png"))),
+//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax4.png"))),
+//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax5.png")))
+//								 };
+			background = ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/background.png")));
 			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert.ttf"));
 			menuFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert Road.otf"));
 			items = new ArrayList<Rectangle>();
@@ -116,8 +129,10 @@ public class MenuScreen extends CommonScreen {
 
 	@Override
 	public void render(Graphics2D graphics) {
-		graphics.setColor(new Color(135, 206, 250)); //light sky
-		graphics.fillRect(0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight());
+	// draw background
+		graphics.drawImage(background, 0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight(), null);
+//		for (int i = 0; i < layers.length; i++)
+//			graphics.drawImage(layers[i], 0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight(), null);
 	// show game title
 		graphics.setColor(Color.ORANGE.darker());
 		graphics.setFont(titleFont.deriveFont(Font.PLAIN, 98));
