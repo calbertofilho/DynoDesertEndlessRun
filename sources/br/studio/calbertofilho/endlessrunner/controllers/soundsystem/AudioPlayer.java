@@ -1,6 +1,6 @@
 package br.studio.calbertofilho.endlessrunner.controllers.soundsystem;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
@@ -17,7 +17,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioPlayer implements LineListener {
 
-	private File file;
 	private AudioInputStream sound, decodedSound;
     private AudioFormat baseFormat, format;
     private DataLine.Info info;
@@ -27,9 +26,11 @@ public class AudioPlayer implements LineListener {
 	private long streamLength;
 	private int loops;
 
-	public AudioPlayer(String soundPath) {
+	public AudioPlayer(BufferedInputStream sound) {
+		loops = 0;
 		try {
-			initPlayer(soundPath);
+			this.sound = AudioSystem.getAudioInputStream(sound);
+			initPlayer();
 			createPlayer();
 			initControls();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -37,10 +38,7 @@ public class AudioPlayer implements LineListener {
 		}
 	}
 
-	private void initPlayer(String soundPath) throws UnsupportedAudioFileException, IOException {
-		loops = 0;
-		file = new File(soundPath);
-		sound = AudioSystem.getAudioInputStream(file);
+	private void initPlayer() throws UnsupportedAudioFileException, IOException {
 		baseFormat = sound.getFormat();
 		format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16, baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
 		info = new DataLine.Info(Clip.class, format);

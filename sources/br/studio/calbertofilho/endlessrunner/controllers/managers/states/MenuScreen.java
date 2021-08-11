@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,17 +36,17 @@ public class MenuScreen extends CommonScreen {
 	@Override
 	protected void init() {
 		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("resources/assets/fonts/Desert.ttf"));
-			menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("resources/assets/fonts/Desert Road.otf"));
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert.ttf"));
+			menuFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert Road.otf"));
 			items = new ArrayList<Rectangle>();
-			menu_bgm = new AudioPlayer("resources/assets/sounds/bgm/game-menu.wav");
+			menu_bgm = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/bgm/game-menu.wav")));
 			menu_bgm.setVolume(1.0f); // 50%
 			menu_bgm.playSoundContinuously();
-			selection_fx = new AudioPlayer("resources/assets/sounds/fx/menu-selection.wav");
+			selection_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-selection.wav")));
 			selection_fx.setVolume(2.0f); // 100%
-			confirmation_fx = new AudioPlayer("resources/assets/sounds/fx/menu-confirmation.wav");
+			confirmation_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-confirmation.wav")));
 			confirmation_fx.setVolume(2.0f); // 100%
-			close_fx = new AudioPlayer("resources/assets/sounds/fx/menu-close_game.wav");
+			close_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-close_game.wav")));
 			close_fx.setVolume(2.0f); // 100%
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();

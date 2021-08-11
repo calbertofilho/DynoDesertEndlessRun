@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--ANT 1.7 is required-->
+<project default="create_run_jar" name="Create Runnable Jar for Project DynoDesertEndlessRun with Jar-in-Jar Loader">
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="C:/Users/STOCK/Códigos Fonte/Java/Local"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/export"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/DynoDesertEndlessRun.jar">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Implementation-Vendor" value="CAlbertoFilho Studio"/>
+                <attribute name="Implementation-Title" value="Dyno Desert Endless Run"/>
+                <attribute name="Implementation-Version" value="1.0.0"/>
+            	<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="br.studio.calbertofilho.endlessrunner.Launcher"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${dir.buildfile}/classes"/>
+        </jar>
+    </target>
+</project>
