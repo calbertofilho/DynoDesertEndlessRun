@@ -31,8 +31,7 @@ public class MenuScreen extends CommonScreen {
 	private int titlePadding = 100;
 	private Point menuPosition = new Point(1100, 400);
 	private AudioPlayer menu_bgm, selection_fx, confirmation_fx, close_fx;
-//	private Image[] layers;
-	private Image background;
+	private Image[] layers;
 
 	public MenuScreen(GameStates manager) {
 		super(manager);
@@ -41,26 +40,27 @@ public class MenuScreen extends CommonScreen {
 	@Override
 	protected void init() {
 		try {
-//			layers = new Image[] {
-//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax1.png"))),
-//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax2.png"))),
-//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax3.png"))),
-//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax4.png"))),
-//									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax5.png")))
-//								 };
-			background = ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/background.png")));
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert.ttf"));
+			layers = new Image[] {  ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax1.png"))),
+									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax2.png"))),
+									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax3.png"))),
+									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax4.png"))),
+									ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/assets/images/scenery/parallax5.png")))  };
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/AREA-Q_DESERT.ttf"));
 			menuFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/assets/fonts/Desert Road.otf"));
 			items = new ArrayList<Rectangle>();
 			menu_bgm = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/bgm/game-menu.wav")));
 			menu_bgm.setVolume(1.0f); // 50%
+//			menu_bgm.setMute(true);
 			menu_bgm.playSoundContinuously();
 			selection_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-selection.wav")));
 			selection_fx.setVolume(2.0f); // 100%
+//			selection_fx.setMute(true);
 			confirmation_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-confirmation.wav")));
 			confirmation_fx.setVolume(2.0f); // 100%
+//			confirmation_fx.setMute(true);
 			close_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-close_game.wav")));
 			close_fx.setVolume(2.0f); // 100%
+//			close_fx.setMute(true);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -130,15 +130,14 @@ public class MenuScreen extends CommonScreen {
 	@Override
 	public void render(Graphics2D graphics) {
 	// draw background
-		graphics.drawImage(background, 0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight(), null);
-//		for (int i = 0; i < layers.length; i++)
-//			graphics.drawImage(layers[i], 0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight(), null);
+		for (int i = 0; i < layers.length - 1; i++)
+			graphics.drawImage(layers[i], 0, 0, DisplayPanel.getGameWidth(), DisplayPanel.getGameHeight(), null);
 	// show game title
 		graphics.setColor(Color.ORANGE.darker());
 		graphics.setFont(titleFont.deriveFont(Font.PLAIN, 98));
 		String[] titleWords = Window.title.replaceAll("\\s+", ",").split(","),
-				 titleLines = { "(%" + titleWords[0] + "#*>"+titleWords[1] + ".|$`-",
-						 		"){" + titleWords[2] + "^"+titleWords[3] + "}@`_~-" };
+				 titleLines = { titleWords[0] + " "+titleWords[1],
+						 		titleWords[2] + " "+titleWords[3] };
 		for (int i = 0; i < titleLines.length; i++) {
 			int lineLength = (int) graphics.getFontMetrics().getStringBounds(titleLines[i], graphics).getWidth();
 			graphics.drawString(titleLines[i], (DisplayPanel.getGameWidth() - lineLength) / 2, titlePadding + i * graphics.getFontMetrics().getHeight());
