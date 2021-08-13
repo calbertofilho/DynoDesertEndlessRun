@@ -6,7 +6,7 @@ import java.util.Stack;
 import br.studio.calbertofilho.endlessrunner.controllers.handlers.Keyboard;
 import br.studio.calbertofilho.endlessrunner.controllers.handlers.Mouse;
 import br.studio.calbertofilho.endlessrunner.controllers.managers.states.CommonScreen;
-import br.studio.calbertofilho.endlessrunner.controllers.managers.states.MenuScreen;
+import br.studio.calbertofilho.endlessrunner.controllers.managers.states.SplashScreen;
 
 public class GameStates {
 
@@ -14,7 +14,7 @@ public class GameStates {
 
 	public GameStates() {
 		states = new Stack<CommonScreen>();
-		states.push(new MenuScreen(this));
+		states.push(new SplashScreen(this));
 	}
 
 	public void changeState(CommonScreen newState) {

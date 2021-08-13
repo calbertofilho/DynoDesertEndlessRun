@@ -1,6 +1,7 @@
 package br.studio.calbertofilho.endlessrunner.controllers.containers;
 
 import java.awt.Image;
+
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
@@ -19,14 +20,14 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(getContentPane().getPreferredSize());
 		setMaximumSize(getContentPane().getPreferredSize());
-		pack();
 		setIgnoreRepaint(true);
 		setFocusable(false);
 		setResizable(false);
+		setUndecorated(true);
+		pack();
 		setLocationRelativeTo(null);
 //		to FullScreen Mode
 //		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-//		etUndecorated(true);
 		setVisible(true);
 	}
 

@@ -50,17 +50,13 @@ public class MenuScreen extends CommonScreen {
 			items = new ArrayList<Rectangle>();
 			menu_bgm = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/bgm/game-menu.wav")));
 			menu_bgm.setVolume(1.0f); // 50%
-//			menu_bgm.setMute(true);
 			menu_bgm.playSoundContinuously();
 			selection_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-selection.wav")));
 			selection_fx.setVolume(2.0f); // 100%
-//			selection_fx.setMute(true);
 			confirmation_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-confirmation.wav")));
 			confirmation_fx.setVolume(2.0f); // 100%
-//			confirmation_fx.setMute(true);
 			close_fx = new AudioPlayer(new BufferedInputStream(getClass().getResourceAsStream("/assets/sounds/fx/menu-close_game.wav")));
 			close_fx.setVolume(2.0f); // 100%
-//			close_fx.setMute(true);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -142,6 +138,8 @@ public class MenuScreen extends CommonScreen {
 			int lineLength = (int) graphics.getFontMetrics().getStringBounds(titleLines[i], graphics).getWidth();
 			graphics.drawString(titleLines[i], (DisplayPanel.getGameWidth() - lineLength) / 2, titlePadding + i * graphics.getFontMetrics().getHeight());
 		}
+	// animation on player presentation
+		
 	// show menu option
 		graphics.setFont(menuFont.deriveFont(Font.BOLD, 60));
 		int optionWidthMax = 0, optionHeight = graphics.getFontMetrics().getHeight();
