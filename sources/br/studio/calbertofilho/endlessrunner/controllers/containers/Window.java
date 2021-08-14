@@ -1,5 +1,6 @@
 package br.studio.calbertofilho.endlessrunner.controllers.containers;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -24,6 +25,7 @@ public class Window extends JFrame {
 		setFocusable(false);
 		setResizable(false);
 		setUndecorated(true);
+		setBackground(new Color(0, 0, 0, 0));
 		pack();
 		setLocationRelativeTo(null);
 //		to FullScreen Mode
