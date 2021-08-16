@@ -25,11 +25,10 @@ public class Window extends JFrame {
 		setFocusable(false);
 		setResizable(false);
 		setUndecorated(true);
-		setBackground(new Color(0, 0, 0, 0));
+		if (!System.getProperty("os.name").toLowerCase().contains("win"))
+			setBackground(new Color(0, 0, 0, 0));
 		pack();
 		setLocationRelativeTo(null);
-//		to FullScreen Mode
-//		setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		setVisible(true);
 	}
 
